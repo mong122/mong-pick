@@ -134,6 +134,15 @@
   ['touchstart', 'wheel', 'keydown'].forEach((ev) => addEventListener(ev, () => timer && stop(), { passive: true }));
   addEventListener('mousedown', (e) => { if (timer && !e.target.closest('a')) stop(); });
 
+  // 방문 세기 (hitscounter.dev, 무료·가입 없음): 전체 + 온 곳별 (?from=blog|threads|x — 링크마다 붙여 둠)
+  // 보는 곳: https://hitscounter.dev/history?url=mong122.github.io%2Fmong-pick%2Fall (all 자리에 blog·threads·x)
+  const from = (new URLSearchParams(location.search).get('from') || 'etc').replace(/[^a-z0-9]/gi, '').slice(0, 12) || 'etc';
+  for (const k of ['all', from]) {
+    const im = new Image();
+    im.referrerPolicy = 'no-referrer';
+    im.src = `https://hitscounter.dev/api/hit?url=${encodeURIComponent('mong122.github.io/mong-pick/' + k)}&label=${k}`;
+  }
+
   fetch('jobs.json?t=' + Date.now(), { cache: 'no-store' })
     .then((r) => r.json())
     .then((data) => {

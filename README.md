@@ -6,3 +6,10 @@
 - 목록 `jobs.json` = 깃허브 Actions 가 한 시간마다 블로그 RSS 로 다시 만듦 (`scripts/update.py`, 사람 손·열쇠 필요 없음)
 - 마감일은 글 제목·첫 문단의 "M월 D일 … 마감/까지" 에서 뽑음. 못 뽑거나 틀리면 `overrides.json` 에 `{"글 주소": {"end": "2026-10-28T10:00"}}` (숨기려면 `{"hide": true}`)
 - 링크 카드 그림 = `og.png`
+
+## 방문 수 보기
+- 전체: https://hitscounter.dev/history?url=mong122.github.io%2Fmong-pick%2Fall
+- 블로그 글에서: https://hitscounter.dev/history?url=mong122.github.io%2Fmong-pick%2Fblog
+- 쓰레드: https://hitscounter.dev/history?url=mong122.github.io%2Fmong-pick%2Fthreads
+- X: https://hitscounter.dev/history?url=mong122.github.io%2Fmong-pick%2Fx
+- 링크 주소 끝에 `?from=blog` · `?from=threads` · `?from=x` 를 붙여서 씀
