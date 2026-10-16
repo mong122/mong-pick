@@ -14,39 +14,54 @@
 <style>
   :root { --bg:#0e1420; --card:#151d2b; --line:#26324a; --ink:#e9eef6; --sub:#9aa7ba; --acc:#2ecc71; --hot:#ff6b5e; }
   * { box-sizing:border-box; }
+  html, body { height:100%; }
   body { margin:0; background:var(--bg); color:var(--ink); font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif; }
-  .wrap { max-width:520px; margin:0 auto; padding:20px 16px 40px; }
+  .wrap { max-width:1000px; margin:0 auto; padding:16px 16px 20px; min-height:100%; display:flex; flex-direction:column; }
+  .head { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .head .tt { flex:1; min-width:220px; }
   .top { color:var(--sub); font-size:13px; letter-spacing:.02em; }
-  .safe { background:#12261b; border:1px solid #1f4d33; color:#bfeccf; border-radius:12px; padding:10px 12px; font-size:14px; line-height:1.5; margin:4px 0 14px; }
-  h1 { font-size:22px; margin:6px 0 16px; }
+  h1 { font-size:22px; margin:4px 0 0; }
+  .allbtn { display:inline-flex; align-items:center; gap:8px; padding:12px 18px; border-radius:12px; background:#1f6feb; color:#fff; font-weight:800; font-size:16px; text-decoration:none; white-space:nowrap; box-shadow:0 4px 14px rgba(31,111,235,.35); }
+  .safe { background:#12261b; border:1px solid #1f4d33; color:#bfeccf; border-radius:12px; padding:8px 12px; font-size:13.5px; line-height:1.5; margin:12px 0; }
+  .grid { display:grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap:18px; align-items:start; }
   .pick { background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden; display:block; color:inherit; text-decoration:none; }
-  .pick img { width:100%; aspect-ratio:1/1; object-fit:cover; display:block; background:#0b1018; }
-  .pick .body { padding:14px 16px 16px; }
-  .pick .t { font-size:17px; font-weight:700; line-height:1.45; word-break:keep-all; }
-  .when { margin-top:8px; font-size:14px; color:var(--sub); }
+  .pick img { width:100%; height:min(42vh, 380px); object-fit:cover; object-position:top; display:block; background:#0b1018; }
+  .pick .body { padding:12px 14px 14px; }
+  .pick .t { font-size:16px; font-weight:700; line-height:1.45; word-break:keep-all; }
+  .when { margin-top:6px; font-size:14px; color:var(--sub); }
   .d { display:inline-block; font-weight:800; color:var(--acc); margin-right:6px; }
   .d.hot { color:var(--hot); }
-  .go { margin-top:14px; display:flex; gap:8px; }
-  .btn { flex:1; text-align:center; padding:12px; border-radius:10px; border:1px solid var(--line); background:#1c2638; color:var(--ink); font-size:15px; font-weight:700; cursor:pointer; text-decoration:none; }
+  .go { margin-top:10px; display:flex; gap:8px; }
+  .btn { flex:1; text-align:center; padding:11px; border-radius:10px; border:1px solid var(--line); background:#1c2638; color:var(--ink); font-size:15px; font-weight:700; cursor:pointer; text-decoration:none; }
   .btn.main { background:var(--acc); border-color:var(--acc); color:#0b1a10; }
-  .count { margin-top:10px; font-size:13px; color:var(--sub); text-align:center; min-height:1.2em; }
-  h2 { font-size:15px; color:var(--sub); margin:26px 0 10px; font-weight:600; }
+  .count { margin-top:8px; font-size:13px; color:var(--sub); text-align:center; min-height:1.2em; }
+  h2 { font-size:15px; color:var(--sub); margin:0 0 10px; font-weight:600; }
   .more a { display:flex; gap:12px; align-items:center; padding:10px; border:1px solid var(--line); border-radius:12px; margin-bottom:8px; color:inherit; text-decoration:none; background:var(--card); }
-  .more img { width:56px; height:56px; border-radius:8px; object-fit:cover; flex:none; background:#0b1018; }
+  .more img { width:64px; height:64px; border-radius:8px; object-fit:cover; flex:none; background:#0b1018; }
   .more .t { font-size:14px; line-height:1.4; word-break:keep-all; }
-  .all { display:block; margin-top:18px; text-align:center; color:var(--sub); font-size:14px; }
-  .sign { margin-top:26px; text-align:center; color:#5d6a80; font-size:12px; }
+  .sign { margin-top:auto; padding-top:14px; text-align:center; color:#5d6a80; font-size:12px; }
   .empty { padding:30px 10px; text-align:center; color:var(--sub); }
+  /* 폰: 위아래로, 그림 줄이고 다른 공고 2개만 (한 화면에 최대한) */
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; gap:14px; }
+    .allbtn { width:100%; justify-content:center; }
+    .pick img { height:min(34vh, 300px); }
+    .more a:nth-child(n+3) { display:none; }
+    h1 { font-size:20px; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="top">MONG 생활노트 · 채용정보</div>
-  <h1>🎯 오늘 놓치면 아까운 공고</h1>
+  <div class="head">
+    <div class="tt"><div class="top">MONG 생활노트 · 채용정보</div><h1>🎯 오늘 놓치면 아까운 공고</h1></div>
+    <a class="allbtn" id="all" href="https://blog.naver.com/PostList.naver?blogId=eleode123&from=postList&categoryNo=29">📋 채용정보 전체 목록 보기</a>
+  </div>
   <div class="safe">✅ MONG 생활노트 블로그의 <b>공고 고르기 화면</b>이에요. 마감 전 채용 글 하나를 골라 <b>네이버 블로그 글로 데려다 드려요.</b> 광고·가입·결제는 없어요.</div>
-  <div id="main"><div class="empty">공고를 고르는 중…</div></div>
-  <div id="more"></div>
-  <a class="all" id="all" href="https://blog.naver.com/PostList.naver?blogId=eleode123&from=postList&categoryNo=29">📋 채용정보 전체 목록 보기 →</a>
+  <div class="grid">
+    <div id="main"><div class="empty">공고를 고르는 중…</div></div>
+    <div id="more"></div>
+  </div>
   <div class="sign">- MONG 생활노트 -</div>
 </div>
 <script>
@@ -101,7 +116,7 @@
       <div class="go"><a class="btn main" href="${esc(j.url)}">이 공고 보러 가기</a><button class="btn" id="again" type="button">🎲 다른 공고</button></div>
       <div class="count" id="count"></div>`;
     $('again').onclick = () => (stop(), show(pick(cur)));
-    const others = open.filter((x) => x !== j).sort((a, b) => endOf(a) - endOf(b)).slice(0, 3);
+    const others = open.filter((x) => x !== j).sort((a, b) => endOf(a) - endOf(b)).slice(0, 4);
     $('more').innerHTML = others.length
       ? `<h2>마감 가까운 다른 공고</h2><div class="more">${others.map((x) => { const l = dLabel(x); return `<a href="${esc(x.url)}"><img src="${esc(x.thumb)}" alt="" referrerpolicy="no-referrer"><div class="t"><span class="d${l.d <= 3 ? ' hot' : ''}">${l.text}</span>${esc(x.title)}</div></a>`; }).join('')}</div>`
       : '';
